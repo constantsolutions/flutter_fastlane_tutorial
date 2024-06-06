@@ -41,6 +41,8 @@ platform :ios do
       "MATCH_GIT_BASIC_AUTHORIZATION",
     ])
 
+    authenticate_apple_store
+
     build_number = options.fetch(:build_number, get_build_number('appstore'))
     version_number = options.fetch(:version_number, get_version_from_pubspec())
 
