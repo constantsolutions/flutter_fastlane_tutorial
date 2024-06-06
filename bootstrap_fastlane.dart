@@ -62,6 +62,16 @@ platform :android do
       UI.user_error!("google_service_account.json file not found. Please add it to the root of the flutter project. See https://docs.fastlane.tools/actions/supply/")
     end
 
+    # Verify version number is correct
+    if !is_ci && (!options[:version_number])
+      version_number = get_version_from_pubspec()
+      continue = UI.confirm("Deploying version #{version_number} (from pubspec.yaml) to Play Store. Continue?")
+
+      unless continue
+        UI.user_error!("Aborted")
+      end
+    end
+
     build_flutter_app(
       type: options[:type] || "appbundle",
       no_codesign: options[:no_codesign],
@@ -206,6 +216,15 @@ platform :ios do
 
     build_number = options.fetch(:build_number, get_build_number('appstore'))
     version_number = options.fetch(:version_number, get_version_from_pubspec())
+
+    # Verify version number is correct
+    if !is_ci && (!options[:version_number])
+      continue = UI.confirm("Deploying version #{version_number} (from pubspec.yaml) to App Store. Continue?")
+
+      unless continue
+        UI.user_error!("Aborted")
+      end
+    end
 
     # Sync certificates and profiles using match
     sync_code_signing(

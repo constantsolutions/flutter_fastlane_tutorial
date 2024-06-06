@@ -46,6 +46,15 @@ platform :ios do
     build_number = options.fetch(:build_number, get_build_number('appstore'))
     version_number = options.fetch(:version_number, get_version_from_pubspec())
 
+    # Verify version number is correct
+    if !is_ci && (!options[:version_number])
+      continue = UI.confirm("Deploying version #{version_number} (from pubspec.yaml) to App Store. Continue?")
+
+      unless continue
+        UI.user_error!("Aborted")
+      end
+    end
+
     # Sync certificates and profiles using match
     UI.message("Syncing certificates and profiles")
     
