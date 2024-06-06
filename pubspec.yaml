@@ -19,6 +19,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
+  # This is read by the Flutter tool to assess capabilities and perform tooling.
+  # But also by the GitHub Actions workflow to determine which Flutter SDK to use.
+  # See https://github.com/subosito/flutter-action?tab=readme-ov-file#use-version-from-pubspecyaml
+  flutter: 3.22.1
   sdk: '>=3.4.1 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
