@@ -227,9 +227,16 @@ platform :ios do
     end
 
     # Sync certificates and profiles using match
+    UI.message("Syncing certificates and profiles")
+    
+    if is_ci
+      UI.message("CI detected. Setting up CI environment")
+      setup_ci
+    end
+
     sync_code_signing(
       type: "appstore",
-      readonly: true,
+      readonly: is_ci,
     )
 
     build_ipa(
